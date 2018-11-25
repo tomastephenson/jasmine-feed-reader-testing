@@ -11,26 +11,26 @@
 $(function() {
     /* This is our first test suite - a test suite just contains
      * a related set of tests. This suite is all about the RSS
-     * feeds definitions, the allFeeds variable in our application.
-     */
+     * feeds definitions, the allFeeds variable in our application. */
+     
     describe('RSS Feeds', function() {
         /* This is our first test - it tests to make sure that the
          * allFeeds variable has been defined and that it is not
          * empty. Experiment with this before you get started on
          * the rest of this project. What happens when you change
          * allFeeds in app.js to be an empty array and refresh the
-         * page?
-         */
+         * page? */
+
         it('are defined', function() {
             expect(allFeeds).toBeDefined();
             expect(allFeeds.length).not.toBe(0);
         });
 
 
-        /* TODO: Write a test that loops through each feed
-         * in the allFeeds object and ensures it has a URL defined
-         * and that the URL is not empty.
-         */
+        /* A test that loops through each feed in the allFeeds
+         * object and ensures it has a URL defined and that
+         * the URL is not empty. */
+
         it('have a non-empty URL defined for each feed', function() {
             for (var i = 0; i < allFeeds.length; i++) {
                 expect(allFeeds[i].url).toBeDefined();
@@ -38,9 +38,9 @@ $(function() {
             };
         });
 
-        /* TODO: Write a test that loops through each feed
-         * in the allFeeds object and ensures it has a name defined
-         * and that the name is not empty.
+        /* A test that loops through each feed in the allFeeds
+         * object and ensures it has a name defined and that
+         * the name is not empty.
          */
         it('have a non-empty name defined for each feed', function() {
             for (var i = 0; i < allFeeds.length; i++) {
@@ -54,20 +54,21 @@ $(function() {
     });
 
 
-    /* TODO: Write a new test suite named 'The menu' */
-    describe('Menu', function() {
+    // A new test suite named 'The menu'
+    describe('The menu', function() {
 
-        /* TODO: Write a test that ensures the menu element is
-         * hidden by default. You'll have to analyze the HTML and
-         * the CSS to determine how we're performing the
-         * hiding/showing of the menu element.
-         */
+        /* A test that ensures the menu element is hidden by default.
+         * When the menu is hidden, the <body> has the class 'menu-hidden'.
+         * The length of 'menu-hidden' is 1 when the class is applied,
+         * and 0 when it isn't. */
         it('is hidden by default', function() {
             var hiddenHeader = document.getElementsByClassName('menu-hidden')
             expect(hiddenHeader.length).toBe(1);
         });
 
-    });
+
+// WORK FROM HERE ONWARDS...
+
 
     /* TODO: Write a test that ensures the menu changes
      * visibility when the menu icon is clicked. This test
@@ -82,9 +83,10 @@ $(function() {
 
          it('displays and hides when clicked', function() {
             var hiddenHeader = document.getElementsByClassName('menu-hidden')           
-//      WHEN MENU IS CLICKED    expect(hiddenHeader.length).toBe(0);
+//      WHEN MENU IS CLICKED    
+            expect(hiddenHeader.length).toBe(0);
         });
-
+    });
 
 /* TODO: Write a new test suite named 'Initial Entries' */
 describe('Initial Entries', function() {
