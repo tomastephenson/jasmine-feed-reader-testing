@@ -12,7 +12,7 @@ $(function() {
     /* This is our first test suite - a test suite just contains
      * a related set of tests. This suite is all about the RSS
      * feeds definitions, the allFeeds variable in our application. */
-     
+
     describe('RSS Feeds', function() {
         /* This is our first test - it tests to make sure that the
          * allFeeds variable has been defined and that it is not
@@ -61,63 +61,85 @@ $(function() {
          * When the menu is hidden, the <body> has the class 'menu-hidden'.
          * The length of 'menu-hidden' is 1 when the class is applied,
          * and 0 when it isn't. */
+
         it('is hidden by default', function() {
-            var hiddenHeader = document.getElementsByClassName('menu-hidden')
-            expect(hiddenHeader.length).toBe(1);
+            expect(document.body).toHaveClass('menu-hidden');
         });
 
 
-// WORK FROM HERE ONWARDS...
+        /* A test that ensures the menu changes visibility when
+         * the menu icon is clicked. This test should have two 
+         * expectations: does the menu display when clicked and
+         * does it hide when clicked again.
+         */
 
+        it('changes visibility when clicked', function() {
 
-    /* TODO: Write a test that ensures the menu changes
-     * visibility when the menu icon is clicked. This test
-     * should have two expectations: does the menu display when
-     * clicked and does it hide when clicked again.
-     */
+            //Create a variable for the menu button
 
-     /* *******TODO: WORK OUT HOW TO TEST ONCLICK FUNCTION
-        NEED TO DO: If menu is clicked, hiddenHeader.length = 0
-        If menu is clicked again, hiddenHeader.length = 1
-     */
+            var menuButton = $('.menu-icon-link');
 
-         it('displays and hides when clicked', function() {
-            var hiddenHeader = document.getElementsByClassName('menu-hidden')           
-//      WHEN MENU IS CLICKED    
-            expect(hiddenHeader.length).toBe(0);
+            // After the first click, menu is shown, so it shouldn't have "menu-hidden" class
+            menuButton.trigger('click');
+            expect(document.body).not.toHaveClass('menu-hidden');
+
+            // After the second click, it should be back:
+
+            menuButton.trigger('click');
+            expect(document.body).toHaveClass('menu-hidden');
         });
     });
 
-/* TODO: Write a new test suite named 'Initial Entries' */
-describe('Initial Entries', function() {
 
-/* TODO: Write a test that ensures when the loadFeed
- * function is called and completes its work, there is at least
- * a single .entry element within the .feed container.
- * Remember, loadFeed() is asynchronous so this test will require
- * the use of Jasmine's beforeEach and asynchronous done() function.
- */
+    describe('Initial Entries', function() {
 
-        it('has a single entry element within the feed container', function() {
-            
+        /* A test that ensures when the loadFeed function is called and 
+         * completes its work, there is at least a single .entry element 
+         * within the .feed container.
+         */
+
+        beforeEach(function(done) {
+            loadFeed(0, done);
+        });
+
+        it('have at least 1 entry element within the feed container', function() {
+            expect($('.feed .entry').length).toBeGreaterThan(0);
         });
 
     });
 
 
-/* TODO: Write a new test suite named 'New Feed Selection' */
+    describe('New Feed Selection', function() {
 
-describe('New Feed Selection', function() {
+        /* A test that ensures when a new feed is loaded
+         * by the loadFeed function that the content actually changes.
+         */
+        
+        //Setting 2 variables - 'feed0' stores the value of the original feed, 'feed1' stores the value after the feed is refreshed
+var feed0 = "";
+var feed1 = "";
 
-/* TODO: Write a test that ensures when a new feed is loaded
- * by the loadFeed function that the content actually changes.
- * Remember, loadFeed() is asynchronous.
- */
+        beforeEach(function(done) {
+            // Load the first feed
+                loadFeed(0, function() {
+                    // Store the value in the 'feed0' variable.
+                    feed0 = $('.feed').html();
+                    done();
+                });
+            });
 
-        it('content changes with a new feed is loaded', function() {
+                it('changes the content when a new feed is loaded', function(done) {
 
+            // Load the second feed
+            loadFeed(1, function() {
+// Store it in the 'feed1' variable.
+                feed1 = $('.feed').html();
+                done();
+            });
+            /* Now that the function has run, we should have 2 different feeds stored into 2 different variables.
+If feed0 and feed1 are equal, the feed data hasn't changed, so we want them to NOT equal ecah other: */
+            expect(feed0).not.toEqual(feed1);
         });
-
     });
 
 }());
